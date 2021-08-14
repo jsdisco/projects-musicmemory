@@ -2,10 +2,10 @@ import React, { useEffect, useRef, useCallback } from 'react';
 import MIDISounds from 'midi-sounds-react';
 import { noteToMidiKey } from '../utils/noteToMidiKey.js';
 
-function Sounds({ currVolume, currSoundData }) {
+function Sounds({ volume, currSoundData }) {
     const midiSounds = useRef(null);
 
-    const setVolume = v => midiSounds.current && midiSounds.current.setMasterVolume(v / 100);
+    const setVolume = v => midiSounds.current && midiSounds.current.setMasterVolume(v);
 
     const playNoteCallback = useCallback((mk, instr) => {
         const playNote = (midiKey, instrumentKey) => midiSounds.current.playChordNow(instrumentKey, [midiKey], 2);
@@ -23,16 +23,12 @@ function Sounds({ currVolume, currSoundData }) {
         }
     }, [playNoteCallback, currSoundData]);
 
-    useEffect(() => {
-        setVolume(currVolume);
-    }, [currVolume]);
-
     return (
         <div className="midi">
             <MIDISounds
                 ref={ref => {
                     midiSounds.current = ref;
-                    setVolume(currVolume);
+                    setVolume(volume);
                 }}
                 instruments={[3, 259]}
             />

@@ -4,7 +4,7 @@ import { chordNotes } from '../utils/chordData.js';
 import createDeck from '../utils/createDeck.js';
 import Sounds from './Sounds.js';
 
-function Game({ settings, isRunning, isSort, updateMoves }) {
+function Game({ settings, isRunning, isSort, updateMoves, volume }) {
     const [flippedCards, setFlippedCards] = useState([]);
     const [foundCards, setFoundCards] = useState([]);
     const [currSoundData, setCurrSoundData] = useState(null);
@@ -64,7 +64,7 @@ function Game({ settings, isRunning, isSort, updateMoves }) {
 
     return (
         <div className="wrapper">
-            <Sounds currVolume={settings.currVolume} currSoundData={currSoundData} />
+            <Sounds volume={volume} currSoundData={currSoundData} />
             <div className={isSort ? 'game sort' : 'game'}>
                 {deck &&
                     deck.map(card => {

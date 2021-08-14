@@ -20,9 +20,9 @@ function MusicMemory() {
             aug: false
         },
         notation: { sharps: true, flats: false },
-        colourGuide: { off: false, on: true },
-        currVolume: 30
+        colourGuide: { off: false, on: true }
     };
+    const [volume, setVolume] = useState(0.3);
     const [settings, setSettings] = useState(initialSettings);
     const [isRunning, setIsRunning] = useState(true);
     const [isSort, setIsSort] = useState(false);
@@ -30,11 +30,6 @@ function MusicMemory() {
     const [allMoves, setAllMoves] = useState([]);
 
     function updateSettings(e) {
-        if (e.target.closest('.icon-volume')) {
-            const newVolume = settings.currVolume === 0 ? 30 : 0;
-            setSettings(prev => ({ ...prev, currVolume: newVolume }));
-            return;
-        }
         if (e.target.name === 'sort') {
             setIsSort(true);
             return;
@@ -73,12 +68,17 @@ function MusicMemory() {
         setThisMoves(moves);
         setAllMoves(prev => [...prev, moves]);
     }
-    const todo = [];
+
+    function updateVolume(vol) {
+        const newVolume = volume === 0 ? 0.3 : 0;
+        setVolume(newVolume);
+    }
+
     return (
         <div className="music-memory">
-            <Header settings={settings} updateSettings={updateSettings} />
+            <Header settings={settings} updateSettings={updateSettings} updateVolume={updateVolume} />
             <Status thisMoves={thisMoves} allMoves={allMoves} updateSettings={updateSettings} />
-            <Game settings={settings} isRunning={isRunning} isSort={isSort} updateMoves={updateMoves} />
+            <Game settings={settings} isRunning={isRunning} isSort={isSort} updateMoves={updateMoves} volume={volume} />
         </div>
     );
 }

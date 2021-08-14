@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import Settings from './Settings.js';
 
-function Header({ settings, updateSettings, updateGameState }) {
+function Header({ settings, updateSettings, updateVolume }) {
     const [isMuted, setIsMuted] = useState(false);
     const [isOpen, setIsOpen] = useState(false);
 
     const handleVolume = e => {
-        updateSettings(e);
+        updateVolume(e);
         setIsMuted(prev => !prev);
     };
     const handleOpen = () => setIsOpen(prev => !prev);
@@ -83,14 +83,7 @@ function Header({ settings, updateSettings, updateGameState }) {
                     </div>
                 </div>
 
-                {isOpen && (
-                    <Settings
-                        settings={settings}
-                        updateSettings={updateSettings}
-                        updateGameState={updateGameState}
-                        handleClose={handleClose}
-                    />
-                )}
+                {isOpen && <Settings settings={settings} updateSettings={updateSettings} handleClose={handleClose} />}
             </header>
         </div>
     );
